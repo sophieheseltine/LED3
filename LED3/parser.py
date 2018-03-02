@@ -2,6 +2,9 @@
 @author: sophieheseltine
 '''
 
+import argparse
+
+
 def parseFile(input):
     
     if input.startswith('http'):
@@ -17,3 +20,10 @@ def parseFile(input):
         #no code written yet
         return N, instructions
     return
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--input', help='input help')
+args = parser.parse_args()
+
+filename = args.input
