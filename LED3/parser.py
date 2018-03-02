@@ -6,9 +6,14 @@ def parseFile(input):
     
     if input.startswith('http'):
         #use requests
-        return None, None
+        pass
     else:
         #read from disk
+        N, instructions = None, []
+        with open(input, 'r') as f:
+            N = int(f.readline())
+            for line in f.readlines():
+                instructions.append(line)
         #no code written yet
-        return None, None
+        return N, instructions
     return
