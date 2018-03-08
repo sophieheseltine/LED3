@@ -34,18 +34,22 @@ def switch(x1, x2, y1, y2, a2d):
                 a2d [i][j] = 0
                 
     return
+
     
-N = 3
+N = 5
 a2d = [[0]*N for _ in range(N)]
 
-turnOn(1, 1, 2, 2, a2d)
-turnOn(2, 2, 1, 1, a2d)
+#turnOn(-1, 1, 2, 2, a2d)
+#turnOn(-2, 2, 1, 1, a2d)
 #turnOff(, , , , a2d)
-switch(0, 0, 2, 2, a2d)
-switch(0, 0, 1, 1, a2d)
+#switch(0, 0, 2, 2, a2d)
+#switch(0, 0, 1, 1, a2d)
+
+#turnOn(-2, 0, 0, 0, a2d)
+
 
 for a in a2d:
     print(a)
 
 count = countLightsOn(N, a2d)
-print(count)
+print("Number of lights on:", count)
