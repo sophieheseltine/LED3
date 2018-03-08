@@ -124,10 +124,12 @@ def main() -> object:
 #print('\n'.join(r.split('\n')))
 
     count = countLightsOn(N, a2d)
+    print("Number of occupied lights: ", count)
+    
     
     return
         
-    print("Number of occupied lights: ", count)
+    
 
 if __name__ == "__main__":
     main()
