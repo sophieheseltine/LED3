@@ -1,5 +1,4 @@
 import urllib.request
-import re
 
 import argparse
 import requests
@@ -17,62 +16,71 @@ def countLightsOn(N, a2d):
     return count
 
 # Turn lights that are off (0) to on (1)
-def turnOn(x1, x2, y1, y2, a2d):
+def turnLightsOnOff(x1, x2, y1, y2, a2d, cmd):
     for i in range(x1, x2 + 1):
         for j in range(y1, y2 + 1):
-            a2d[i][j] = 1
+            if a2d[i][j] == 0 and (cmd == "turn on" or cmd == "switch"):
+                a2d[i][j] = 1
+                
+            elif a2d[i][j] == 1 and (cmd == "turn off" or cmd == "switch"):
+                a2d[i][j] = 0
             
-    return
+    return a2d
 
 
 # Turn lights off that are on (1) to off (0)
-def turnOff(x1, x2, y1, y2, a2d):
-    for i in range(x1, x2 + 1):
-        for j in range(y1, y2 + 1):
-            a2d[i][j] = 0
+#def turnLightsOnOff(x1, x2, y1, y2, a2d):
+ #   for i in range(x1, x2 + 1):
+  #      for j in range(y1, y2 + 1):
+   #         a2d[i][j] = 0
             
-    return
+    #return
 
 # Switch lights that are on (1) to off (0) and lights that are off (0) to on (1) 
-def switch(x1, x2, y1, y2, a2d):
-    for i in range(x1, x2 + 1):
-        for j in range(y1, y2 + 1):
-            if a2d[i][j] == 0:
-                a2d[i][j] = 1
-            elif a2d[i][j] == 1:
-                a2d [i][j] = 0
-                
-    return
+#def switchLights(x1, x2, y1, y2, a2d):
+ #   for i in range(x1, x2 + 1):
+  #      for j in range(y1, y2 + 1):
+   #         if a2d[i][j] == 0:
+    #            a2d[i][j] = 1
+     #       elif a2d[i][j] == 1:
+      #          a2d [i][j] = 0
+       #         
+   # return
+
 
 
 def split(line):
+    
+    newLine = line
+    newLine = newLine.replace("through", "")
+    newLine = newLine.replace("\n", ",")
+    
+    if line.startswith(" "):
+        newLine = newLine.strip()
+    if line.endswith(" "):
+        newLine = newLine.strip()
     
     x1 = ""
     x2 = ""
     y1 = ""
     y2 = ""
     cmd = ""
-    
-    newLine = line
-    newLine = cmd.replace("through", " ")
-    newLine = cmd.replace("\n", ",")
-    
-    
-    
+
     if newLine.startswith("turn on"):
         cmd = "turn on"
         newLine = newLine.replace("turn on", "")
         
-    elif newLine.startswith("turn off"):
+    if newLine.startswith("turn off"):
         cmd = "turn off"
         newLine = newLine.replace("turn off", "")
         
-    elif newLine.startswith("switch"):
+    if newLine.startswith("switch"):
         cmd = "switch"
         newLine = newLine.replace("switch", "")
         
-    elif cmd != "":
-        newLine = newLine.replace(",", "")
+    if cmd != "":
+        newLine = newLine.replace(",", " ")
+        
         val = [int(s) for s in newLine.split() if s.isdigit()]
         
         x1 = val[0]
@@ -82,9 +90,36 @@ def split(line):
         
     return cmd, x1, x2, y1, y2
         
-   
         
-def main() -> object:
+# This function ensures that negative numbers cannot be used for 
+# the coordinates and that the coordinates cannot be greater than 
+# the size of the grid.
+def cleanUp(x1, x2, y1, y2, N):
+
+    if int(x1) < 0:
+        x1 = 0
+    if int(x2) < 0:
+        x2 = 0
+    if int(y1) < 0:
+        y1 = 0
+    if int(y2) < 0:
+        y2 = 0
+
+    if int(x1) >= N:
+        x1 = N-1
+    if int(x2) >= N:
+        x2 = N-1
+    if int(y1) >= N:
+        y1 = N-1
+    if int(y2) >= N:
+        y2 = N-1
+
+    return x1, x2, y1, y2
+    
+
+   
+# Parse input        
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', help='input help')
     args = parser.parse_args()
@@ -98,6 +133,8 @@ def main() -> object:
     
     a2d = []
     
+    
+    # Make the grid
     for line in buffer.split('\n'):
         
         if line == "":
@@ -105,23 +142,18 @@ def main() -> object:
         
         if line.isdigit():
             N = int(line)
-            a2d = [[0] * N for _ in range(N)]
+            a2d = [[0]*N for _ in range(N)]
                          
         else:
             command, x1, x2, y1, y2 = split(line)
-            if command == "turn on":
+            
+            if command == "turn on" or command == "turn off" or command == "switch":
+                
+                x1, x2, y1, y2 = cleanUp(x1, x2, y1, y2, N)
+                
                 if int(x1) <= int(x2) and int(y1) <= int(y2):
-                    turnOn(int(x1), int(x2), int(y1), int(y2), a2d)
-                    
-            elif command == "turn off":
-                if int(x1) <= int(x2) and int(y1) <= int(y2):
-                        turnOff(int(x1), int(x2), int(y1), int(y2), a2d)
-                    
-            elif command == "switch":
-                if int(x1) <= int(x2) and int(y1) <= int(y2):
-                        switch(int(x1), int(x2), int(y1), int(y2), a2d)
+                    turnLightsOnOff(int(x1), int(x2), int(y1), int(y2), a2d, command)
 
-#print('\n'.join(r.split('\n')))
 
     count = countLightsOn(N, a2d)
     print("Number of occupied lights: ", count)
