@@ -18,7 +18,6 @@ itsdangerous==0.24
 Jinja2==2.10
 jinja2-time==0.2.0
 jmespath==0.9.3
--e git+https://github.com/sophieheseltine/LED3.git@4e3822e21aa861b77a966f67b6a8e1fe424d37d5#egg=LED3
 MarkupSafe==1.0
 numpy==1.13.1
 poyo==0.4.1
@@ -32,7 +31,6 @@ scikit-learn==0.19.0
 scipy==0.19.1
 six==1.11.0
 smmap==0.9.0
-systeminfo==0.1
 urllib3==1.22
 Werkzeug==0.14.1
 whichcraft==0.4.1
