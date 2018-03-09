@@ -16,7 +16,7 @@ def countLightsOn(N, a2d):
     return count
 
 # Turn lights that are off (0) to on (1)
-def turnLightsOnOff(x1, x2, y1, y2, a2d, cmd):
+def lights(x1, x2, y1, y2, a2d, cmd):
     for i in range(x1, x2 + 1):
         for j in range(y1, y2 + 1):
             if a2d[i][j] == 0 and (cmd == "turn on" or cmd == "switch"):
@@ -131,7 +131,7 @@ def main():
                 x1, x2, y1, y2 = cleanUp(x1, x2, y1, y2, N)
                 
                 if int(x1) <= int(x2) and int(y1) <= int(y2):
-                    turnLightsOnOff(int(x1), int(x2), int(y1), int(y2), a2d, command)
+                    lights(int(x1), int(x2), int(y1), int(y2), a2d, command)
 
 
     count = countLightsOn(N, a2d)
