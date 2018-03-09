@@ -28,27 +28,6 @@ def turnLightsOnOff(x1, x2, y1, y2, a2d, cmd):
     return a2d
 
 
-# Turn lights off that are on (1) to off (0)
-#def turnLightsOnOff(x1, x2, y1, y2, a2d):
- #   for i in range(x1, x2 + 1):
-  #      for j in range(y1, y2 + 1):
-   #         a2d[i][j] = 0
-            
-    #return
-
-# Switch lights that are on (1) to off (0) and lights that are off (0) to on (1) 
-#def switchLights(x1, x2, y1, y2, a2d):
- #   for i in range(x1, x2 + 1):
-  #      for j in range(y1, y2 + 1):
-   #         if a2d[i][j] == 0:
-    #            a2d[i][j] = 1
-     #       elif a2d[i][j] == 1:
-      #          a2d [i][j] = 0
-       #         
-   # return
-
-
-
 def split(line):
     
     newLine = line
